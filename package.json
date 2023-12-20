@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --log-level warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
+    "lint:style": "stylelint ./**/**.{css,scss} --fix --config ./.stylelintrc",
     "lint": "yarn lint:format && yarn lint:fix ",
     "prepare": "husky install"
   },
@@ -34,12 +35,20 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.2.0",
     "prettier": "^3.1.1",
+    "sass": "^1.69.5",
+    "stylelint": "^16.0.2",
+    "stylelint-config-recommended-scss": "^14.0.0",
+    "stylelint-prettier": "^5.0.0",
+    "stylelint-scss": "^6.0.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
       "npm run lint"
+    ],
+    "**/*.{css,scss}": [
+      "npm run lint:style"
     ]
   },
   "husky": {
