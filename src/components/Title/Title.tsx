@@ -1,9 +1,14 @@
+import './Title.scss';
+
 export const Title = () => {
   return (
-    <div>
+    <div className="title-container">
       <h1>Table Component</h1>
-      <h3>
-        made with <a href="https://primereact.org/">PrimeReact</a>
+      <h3 className="title__subtitle">
+        made with{' '}
+        <a className="title__subtitle-link" href="https://primereact.org/">
+          PrimeReact
+        </a>
       </h3>
     </div>
   );

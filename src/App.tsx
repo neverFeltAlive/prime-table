@@ -1,3 +1,5 @@
+import './App.scss';
+
 import { Title } from 'components';
 
 function App() {
