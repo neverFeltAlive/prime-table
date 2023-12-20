@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --log-level warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
-    "lint": "yarn lint:format && yarn lint:fix "
+    "lint": "yarn lint:format && yarn lint:fix ",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -30,8 +31,20 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,jsx,tsx}": [
+      "npm run lint"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
