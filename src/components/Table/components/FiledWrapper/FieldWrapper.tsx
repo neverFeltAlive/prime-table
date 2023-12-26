@@ -36,7 +36,7 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
   };
 
   return cellId === fieldInEditMode ? (
-    <div className="flex flex-col gap-0.5 px-1">
+    <div className="flex flex-col gap-0.5 px-1 relative">
       <span className="p-input-icon-right">
         <i className="pi pi-cog" />
         <InputText
@@ -48,7 +48,9 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
           onChange={handleChange}
         />
       </span>
-      {!!error && <small>{error}</small>}
+      {!!error && (
+        <small className="absolute bottom-0 translate-y-full">{error}</small>
+      )}
     </div>
   ) : (
     <div onDoubleClick={handleDoubleClick}>{children}</div>
