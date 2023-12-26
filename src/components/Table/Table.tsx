@@ -1,11 +1,15 @@
 import { useTableData } from 'hooks/useTableData.ts';
 import { useUserFilters } from 'hooks/useUserFilters.ts';
 import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
+import {
+  DataTable,
+  DataTableSelectionSingleChangeEvent,
+} from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
-import { ChangeEvent, createContext } from 'react';
+import { ChangeEvent, createContext, useState } from 'react';
+import { User } from 'types';
 
-import { TableProvider } from './components';
+import { SelectedUser, TableProvider } from './components';
 import { renderedColumns as usersColumns } from './helpers';
 import { TableContext as TableContextType } from './types.ts';
 
@@ -19,6 +23,7 @@ export const TableContext = createContext<TableContextType>({
 export const Table = () => {
   const [filters, updateGlobalFilter] = useUserFilters();
   const [usersData, updateData] = useTableData();
+  const [selected, setSelected] = useState<User | null>(null);
 
   const globalFilterValue = filters.global.value || undefined;
 
@@ -26,8 +31,17 @@ export const Table = () => {
     updateGlobalFilter('global')(event.target.value);
   };
 
+  const handleSelectionChange = (
+    event: DataTableSelectionSingleChangeEvent<User[]>
+  ) => {
+    setSelected(event.value);
+  };
+
   const header = (
-    <div className="flex justify-end p-2">
+    <div className="flex justify-between p-2">
+      <div className="flex w-1/2">
+        {selected && <SelectedUser user={selected} />}
+      </div>
       <div className="flex justify-center gap-2 items-center">
         <i className="pi pi-search" />
         <InputText
@@ -58,6 +72,8 @@ export const Table = () => {
         emptyMessage="No users found"
         resizableColumns
         reorderableColumns
+        selectionMode="single"
+        onSelectionChange={handleSelectionChange}
       >
         {usersColumns.map((column) => (
           <Column className="max-w-2" key={column.field} {...column} />
