@@ -21,10 +21,12 @@ export interface Filter<T> {
 
 export type FilterableUser = Pick<User, 'sex' | 'birthdate' | 'registeredAt'>;
 
-export type FiltersStateType = {
+export type FiltersState = {
   [Property in keyof FilterableUser]: Filter<FilterableUser[Property]>;
+} & {
+  global: Filter<string>;
 };
 
-export type UpdateFilters = <FilterName extends keyof FiltersStateType>(
+export type UpdateFilters = <FilterName extends keyof FiltersState>(
   filterName: FilterName
-) => <Value extends FilterableUser[FilterName]>(value: Value) => void;
+) => <Value extends FiltersState[FilterName]['value']>(value: Value) => void;
