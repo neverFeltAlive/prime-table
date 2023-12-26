@@ -16,6 +16,9 @@ export const Table = () => {
       rowsPerPageOptions={[5, 10, 25, 50]}
       sortMode="multiple"
       removableSort
+      size="small"
+      showGridlines
+      stripedRows
     >
       {usersColumns.map((column) => (
         <Column key={column.field} {...column} />
