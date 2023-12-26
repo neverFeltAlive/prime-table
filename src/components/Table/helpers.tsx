@@ -14,6 +14,7 @@ import {
   IdField,
   SelectFilter,
 } from './components';
+import { DateFilter } from './components/DateFilter';
 import { UserColumn } from './types.ts';
 
 const getFieldRenderer = (fieldName: keyof User) => {
@@ -98,12 +99,14 @@ export const COLUMNS: UserColumn[] = [
     header: 'Birth Date',
     sortable: true,
     filter: true,
+    filterElement: (filterOptions) => <DateFilter {...filterOptions} />,
   },
   {
     field: 'registeredAt',
     header: 'Registered At',
     sortable: true,
     filter: true,
+    filterElement: (filterOptions) => <DateFilter {...filterOptions} />,
   },
 ];
 
