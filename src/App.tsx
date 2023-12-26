@@ -1,4 +1,3 @@
-import './App.scss';
 import 'primereact/resources/themes/md-dark-indigo/theme.css';
 
 import { PrimeReactProvider } from 'primereact/api';
