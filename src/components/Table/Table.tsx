@@ -24,6 +24,8 @@ export const Table = () => {
       stripedRows
       filterDisplay="menu"
       emptyMessage="No users found"
+      resizableColumns
+      reorderableColumns
     >
       {usersColumns.map((column) => (
         <Column key={column.field} {...column} />
