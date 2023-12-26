@@ -1,14 +1,20 @@
 import { TableContext } from 'components';
-import { FC, useState } from 'react';
+import { FormikProps } from 'formik/dist/types';
+import { FC, useRef, useState } from 'react';
+import { UserForm } from 'types';
 
+import { TableForm } from '../TableForm';
 import { TableProviderProps } from './types.ts';
 
 export const TableProvider: FC<TableProviderProps> = ({ children }) => {
   const [fieldInEditMode, setFieldInEditMode] = useState<string | null>(null);
+  const formRef = useRef<FormikProps<UserForm>>(null);
 
   return (
-    <TableContext.Provider value={{ fieldInEditMode, setFieldInEditMode }}>
-      {children}
+    <TableContext.Provider
+      value={{ formRef, fieldInEditMode, setFieldInEditMode }}
+    >
+      <TableForm innerRef={formRef}>{children}</TableForm>
     </TableContext.Provider>
   );
 };

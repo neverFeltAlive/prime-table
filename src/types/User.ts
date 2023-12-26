@@ -35,7 +35,6 @@ export const editableFields = [
   'username',
   'name',
   'lastName',
-  'sex',
   'favouriteMusic',
   'favouriteSong',
 ] as const;
@@ -45,3 +44,5 @@ export type EditableFields = (typeof editableFields)[number];
 export const dateFields = ['birthdate', 'registeredAt'] as const;
 
 export type DateFields = (typeof dateFields)[number];
+
+export type UserForm = Partial<Pick<User, EditableFields>>;

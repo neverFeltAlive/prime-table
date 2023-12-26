@@ -13,6 +13,7 @@ import { TableContext as TableContextType } from './types.ts';
 
 export const TableContext = createContext<TableContextType>({
   fieldInEditMode: null,
+  formRef: null,
   setFieldInEditMode: () => {},
 });
 
