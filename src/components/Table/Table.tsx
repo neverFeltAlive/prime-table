@@ -7,7 +7,6 @@ import {
 } from './helpers';
 
 export const Table = () => {
-  console.log(usersColumns);
   return (
     <DataTable
       value={usersData}

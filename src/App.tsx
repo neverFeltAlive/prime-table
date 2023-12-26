@@ -1,13 +1,13 @@
 import './App.scss';
 import 'primereact/resources/themes/md-dark-indigo/theme.css';
 
-import { Table, Title } from 'components';
 import { PrimeReactProvider } from 'primereact/api';
+
+import { Default } from './pages';
 function App() {
   return (
     <PrimeReactProvider>
-      <Title />
-      <Table />
+      <Default />
     </PrimeReactProvider>
   );
 }
