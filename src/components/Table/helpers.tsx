@@ -120,4 +120,5 @@ export const COLUMNS: UserColumn[] = [
 export const renderedColumns = COLUMNS.map((column: UserColumn) => ({
   ...column,
   body: getFieldRenderer(column.field),
+  headerClassName: 'text-center',
 }));
