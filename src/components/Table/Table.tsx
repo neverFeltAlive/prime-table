@@ -1,16 +1,24 @@
+import { useTableData } from 'hooks/useTableData.ts';
 import { useUserFilters } from 'hooks/useUserFilters.ts';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, createContext } from 'react';
 
-import {
-  COLUMNS as usersColumns,
-  GENERATED_DATA as usersData,
-} from './helpers';
+import { TableProvider } from './components';
+import { renderedColumns as usersColumns } from './helpers';
+import { TableContext as TableContextType } from './types.ts';
+
+export const TableContext = createContext<TableContextType>({
+  fieldInEditMode: null,
+  formRef: null,
+  setFieldInEditMode: () => {},
+  updateData: () => new Promise(() => {}),
+});
 
 export const Table = () => {
   const [filters, updateFilters] = useUserFilters();
+  const [usersData, updateData] = useTableData();
 
   const globalFilterValue = filters.global.value || undefined;
 
@@ -32,27 +40,29 @@ export const Table = () => {
   );
 
   return (
-    <DataTable
-      header={header}
-      value={usersData}
-      filters={filters}
-      globalFilterFields={['name', 'userName']}
-      paginator
-      rows={5}
-      rowsPerPageOptions={[5, 10, 25, 50]}
-      sortMode="multiple"
-      removableSort
-      size="small"
-      showGridlines
-      stripedRows
-      filterDisplay="menu"
-      emptyMessage="No users found"
-      resizableColumns
-      reorderableColumns
-    >
-      {usersColumns.map((column) => (
-        <Column className="max-w-2" key={column.field} {...column} />
-      ))}
-    </DataTable>
+    <TableProvider updateData={updateData}>
+      <DataTable
+        header={header}
+        value={usersData}
+        filters={filters}
+        globalFilterFields={['name', 'userName']}
+        paginator
+        rows={5}
+        rowsPerPageOptions={[5, 10, 25, 50]}
+        sortMode="multiple"
+        removableSort
+        size="small"
+        showGridlines
+        stripedRows
+        filterDisplay="menu"
+        emptyMessage="No users found"
+        resizableColumns
+        reorderableColumns
+      >
+        {usersColumns.map((column) => (
+          <Column className="max-w-2" key={column.field} {...column} />
+        ))}
+      </DataTable>
+    </TableProvider>
   );
 };

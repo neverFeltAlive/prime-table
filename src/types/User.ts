@@ -30,3 +30,24 @@ export type FiltersState = {
 export type UpdateFilters = <FilterName extends keyof FiltersState>(
   filterName: FilterName
 ) => <Value extends FiltersState[FilterName]['value']>(value: Value) => void;
+
+export const editableFields = [
+  'username',
+  'name',
+  'lastName',
+  'favouriteMusic',
+  'favouriteSong',
+] as const;
+
+export type EditableFields = (typeof editableFields)[number];
+
+export const dateFields = ['birthdate', 'registeredAt'] as const;
+
+export type DateFields = (typeof dateFields)[number];
+
+export type UserForm = Partial<Pick<User, EditableFields>>;
+
+export type UpdateUsersFunction = (
+  cellId: string,
+  value: string
+) => Promise<void>;

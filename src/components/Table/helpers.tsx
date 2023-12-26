@@ -1,37 +1,47 @@
-import { faker } from '@faker-js/faker';
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
-import { ReactElement } from 'react';
-import { User } from 'types';
+import {
+  DateFields,
+  dateFields,
+  EditableFields,
+  editableFields,
+  User,
+} from 'types';
 
-import { AvatarField, DateField, IdField, SelectFilter } from './components';
+import {
+  AvatarField,
+  DateField,
+  FieldWrapper,
+  IdField,
+  SelectFilter,
+} from './components';
 import { UserColumn } from './types.ts';
 
-function generateRandomData(): User {
-  return {
-    userId: faker.string.uuid(),
-    username: faker.internet.userName(),
-    name: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    favouriteMusic: faker.music.genre(),
-    favouriteSong: faker.music.songName(),
-    sex: faker.person.sex(),
-    email: faker.internet.email(),
-    avatar: faker.image.avatar(),
-    birthdate: faker.date.birthdate(),
-    registeredAt: faker.date.past(),
+const getFieldRenderer = (fieldName: keyof User) => {
+  const fieldRenderers = {
+    userId: (user: User) => <IdField id={user.userId} />,
+    avatar: (user: User) => <AvatarField src={user.avatar} />,
+    date: (user: User) => <DateField date={user[fieldName as DateFields]} />,
+    editable: (user: User) => (
+      <FieldWrapper user={user} fieldName={fieldName as EditableFields}>
+        {user[fieldName as keyof Omit<User, DateFields>]}
+      </FieldWrapper>
+    ),
+    default: (user: User) => user[fieldName],
   };
-}
 
-export const GENERATED_DATA = faker.helpers.multiple(generateRandomData, {
-  count: 100,
-});
+  const fieldKey = editableFields.includes(fieldName as EditableFields)
+    ? 'editable'
+    : dateFields.includes(fieldName as DateFields)
+      ? 'date'
+      : fieldName;
+  return fieldRenderers[fieldKey] || fieldRenderers['default'];
+};
 
 export const COLUMNS: UserColumn[] = [
   {
     field: 'userId',
     header: 'ID',
     sortable: true,
-    body: (user: User): ReactElement => <IdField id={user.userId} />,
   },
   {
     field: 'username',
@@ -82,20 +92,22 @@ export const COLUMNS: UserColumn[] = [
     field: 'avatar',
     header: 'Avatar',
     sortable: true,
-    body: (user: User): ReactElement => <AvatarField src={user.avatar} />,
   },
   {
     field: 'birthdate',
     header: 'Birth Date',
     sortable: true,
-    body: (user: User): ReactElement => <DateField date={user.birthdate} />,
     filter: true,
   },
   {
     field: 'registeredAt',
     header: 'Registered At',
     sortable: true,
-    body: (user: User): ReactElement => <DateField date={user.registeredAt} />,
     filter: true,
   },
 ];
+
+export const renderedColumns = COLUMNS.map((column: UserColumn) => ({
+  ...column,
+  body: getFieldRenderer(column.field),
+}));
