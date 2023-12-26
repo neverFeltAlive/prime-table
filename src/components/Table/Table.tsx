@@ -59,7 +59,14 @@ export const Table = () => {
         header={header}
         value={usersData}
         filters={filters}
-        globalFilterFields={['name', 'userName']}
+        globalFilterFields={[
+          'name',
+          'userName',
+          'name',
+          'lastName',
+          'favouriteMusic',
+          'favouriteSong',
+        ]}
         paginator
         rows={5}
         rowsPerPageOptions={[5, 10, 25, 50]}
