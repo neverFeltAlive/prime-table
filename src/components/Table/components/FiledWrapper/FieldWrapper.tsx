@@ -1,6 +1,6 @@
 import { useTableContext } from 'hooks/useTableContext.ts';
 import { InputText } from 'primereact/inputtext';
-import { FC, useState } from 'react';
+import { FC, KeyboardEvent, useState } from 'react';
 
 import { FieldWrapperProps } from './types.ts';
 
@@ -14,6 +14,12 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
 
   const cellId = `${user.userId}.${fieldName}`;
 
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setFieldInEditMode(null);
+    }
+  };
+
   const handleDoubleClick = () => {
     if (!fieldInEditMode) {
       setFieldInEditMode(cellId);
@@ -24,6 +30,7 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
     <span className="p-input-icon-right">
       <i className="pi pi-cog" />
       <InputText
+        onKeyDown={handleKeyPress}
         className="px-2 py-1 bg-transparent"
         value={inputValue}
         autoFocus={true}
