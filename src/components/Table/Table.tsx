@@ -1,3 +1,4 @@
+import { useTableData } from 'hooks/useTableData.ts';
 import { useUserFilters } from 'hooks/useUserFilters.ts';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
@@ -5,20 +6,19 @@ import { InputText } from 'primereact/inputtext';
 import { ChangeEvent, createContext } from 'react';
 
 import { TableProvider } from './components';
-import {
-  GENERATED_DATA as usersData,
-  renderedColumns as usersColumns,
-} from './helpers';
+import { renderedColumns as usersColumns } from './helpers';
 import { TableContext as TableContextType } from './types.ts';
 
 export const TableContext = createContext<TableContextType>({
   fieldInEditMode: null,
   formRef: null,
   setFieldInEditMode: () => {},
+  updateData: () => new Promise(() => {}),
 });
 
 export const Table = () => {
   const [filters, updateFilters] = useUserFilters();
+  const [usersData, updateData] = useTableData();
 
   const globalFilterValue = filters.global.value || undefined;
 
@@ -40,7 +40,7 @@ export const Table = () => {
   );
 
   return (
-    <TableProvider>
+    <TableProvider updateData={updateData}>
       <DataTable
         header={header}
         value={usersData}

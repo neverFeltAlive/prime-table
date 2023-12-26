@@ -46,3 +46,8 @@ export const dateFields = ['birthdate', 'registeredAt'] as const;
 export type DateFields = (typeof dateFields)[number];
 
 export type UserForm = Partial<Pick<User, EditableFields>>;
+
+export type UpdateUsersFunction = (
+  cellId: string,
+  value: string
+) => Promise<void>;
