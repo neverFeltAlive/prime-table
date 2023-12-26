@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ReactElement } from 'react';
 
-import { AvatarField, DateField } from './components';
+import { AvatarField, DateField, IdField } from './components';
 import { User, UserColumn } from './types.ts';
 
 function generateRandomData(): User {
@@ -28,6 +28,7 @@ export const COLUMNS: UserColumn[] = [
   {
     field: 'userId',
     header: 'ID',
+    body: (user: User): ReactElement => <IdField id={user.userId} />,
   },
   {
     field: 'username',

@@ -7,3 +7,11 @@
 @tailwind utilities;
 
 /*@import 'reset.css';*/
+
+body {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}

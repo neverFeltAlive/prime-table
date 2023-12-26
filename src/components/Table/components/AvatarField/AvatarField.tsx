@@ -3,5 +3,5 @@ import { FC } from 'react';
 import { AvatarFieldProps } from './types.ts';
 
 export const AvatarField: FC<AvatarFieldProps> = ({ src }) => {
-  return <img src={src} alt="user avatar" />;
+  return <img className="rounded-full w-40" src={src} alt="user avatar" />;
 };
