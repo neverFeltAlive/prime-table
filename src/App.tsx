@@ -1,11 +1,12 @@
 import './App.scss';
 
-import { Title } from 'components';
+import { Table, Title } from 'components';
 
 function App() {
   return (
     <>
       <Title />
+      <Table />
     </>
   );
 }
