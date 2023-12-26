@@ -17,13 +17,13 @@ export const TableContext = createContext<TableContextType>({
 });
 
 export const Table = () => {
-  const [filters, updateFilters] = useUserFilters();
+  const [filters, updateGlobalFilter] = useUserFilters();
   const [usersData, updateData] = useTableData();
 
   const globalFilterValue = filters.global.value || undefined;
 
   const onGlobalFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateFilters('global')(event.target.value);
+    updateGlobalFilter('global')(event.target.value);
   };
 
   const header = (

@@ -1,4 +1,7 @@
-import { FilterMatchMode } from 'primereact/api';
+import {
+  DataTableFilterMetaData,
+  DataTableOperatorFilterMetaData,
+} from 'primereact/datatable';
 
 export interface User {
   userId: string;
@@ -14,22 +17,27 @@ export interface User {
   registeredAt: Date;
 }
 
-export interface Filter<T> {
+export interface GenericFilter<T> extends DataTableFilterMetaData {
   value: null | T;
-  matchMode: FilterMatchMode;
 }
+
+export interface ConstrainedFilter<T> extends DataTableOperatorFilterMetaData {
+  constraints: GenericFilter<T>[];
+}
+
+export type Filter<T> = GenericFilter<T> | ConstrainedFilter<T>;
 
 export type FilterableUser = Pick<User, 'sex' | 'birthdate' | 'registeredAt'>;
 
 export type FiltersState = {
   [Property in keyof FilterableUser]: Filter<FilterableUser[Property]>;
 } & {
-  global: Filter<string>;
+  global: GenericFilter<string>;
 };
 
 export type UpdateFilters = <FilterName extends keyof FiltersState>(
   filterName: FilterName
-) => <Value extends FiltersState[FilterName]['value']>(value: Value) => void;
+) => <Value>(value: Value) => void;
 
 export const editableFields = [
   'username',
