@@ -38,11 +38,11 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
   return cellId === fieldInEditMode ? (
     <div className="flex flex-col gap-0.5 px-1 relative">
       <span className="p-input-icon-right">
-        <i className={`pi pi-cog ${error ? 'text-red' : ''}`} />
+        <i className={`pi pi-cog pi-spin ${error ? 'text-red' : ''}`} />
         <InputText
           id={fieldName}
           value={value}
-          className={`p-1 bg-transparent ${error ? 'p-invalid' : ''}`}
+          className={`py-2 bg-transparent w-full ${error ? 'p-invalid' : ''}`}
           autoFocus={true}
           onKeyDown={handleKeyPress}
           onChange={handleChange}
