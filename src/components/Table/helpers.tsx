@@ -1,3 +1,4 @@
+import { FilterMatchMode } from 'primereact/api';
 import { ColumnFilterElementTemplateOptions } from 'primereact/column';
 import {
   DateFields,
@@ -64,6 +65,10 @@ export const COLUMNS: UserColumn[] = [
     header: 'Gender',
     sortable: true,
     filter: true,
+    filterMatchModeOptions: [
+      { label: 'Equals', value: FilterMatchMode.EQUALS },
+      { label: 'Not Equals', value: FilterMatchMode.NOT_EQUALS },
+    ],
     filterElement: (filterOptions: ColumnFilterElementTemplateOptions) => (
       <SelectFilter
         options={[
@@ -99,6 +104,7 @@ export const COLUMNS: UserColumn[] = [
     header: 'Birth Date',
     sortable: true,
     filter: true,
+    dataType: 'date',
     filterElement: (filterOptions) => <DateFilter {...filterOptions} />,
   },
   {
@@ -106,6 +112,7 @@ export const COLUMNS: UserColumn[] = [
     header: 'Registered At',
     sortable: true,
     filter: true,
+    dataType: 'date',
     filterElement: (filterOptions) => <DateFilter {...filterOptions} />,
   },
 ];
